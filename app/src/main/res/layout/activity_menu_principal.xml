@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.lucas.uniforajuda.MenuPrincipal"
+    android:background="#da111010">
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="65dp"
+        android:text="Nova Postagem"
+        android:id="@+id/btPostagem"
+        android:layout_marginBottom="65dp"
+        android:background="#007ea4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="175dp"
+        android:layout_height="65dp"
+        android:text="Histórico Geral"
+        android:id="@+id/btHistorico"
+        android:background="#007ea4"
+        android:layout_above="@+id/btPostagem"
+        android:layout_toStartOf="@+id/btMeuHistorico" />
+
+    <Button
+        android:layout_width="175dp"
+        android:layout_height="65dp"
+        android:text="Meu Histórico"
+        android:id="@+id/btMeuHistorico"
+        android:background="#007ea4"
+        android:layout_alignBaseline="@+id/btHistorico"
+        android:layout_alignBottom="@+id/btHistorico"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
