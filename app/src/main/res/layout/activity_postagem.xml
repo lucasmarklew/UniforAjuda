@@ -18,7 +18,7 @@
         android:layout_alignParentStart="true"
         android:autoText="true"
         android:background="#fbfafa"
-        android:hint="Titulo"
+        android:hint="Titulo (ajudará outros usuários)"
         android:capitalize="sentences" />
 
     <Button
@@ -28,7 +28,8 @@
         android:id="@+id/btSalvarPostagem"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#007ea4" />
+        android:background="#007ea4"
+        android:textColor="#ffffff" />
 
     <EditText
         android:layout_width="fill_parent"

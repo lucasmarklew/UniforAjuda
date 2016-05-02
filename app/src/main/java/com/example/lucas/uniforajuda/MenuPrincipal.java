@@ -30,7 +30,7 @@ public class MenuPrincipal extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuPrincipal.this, Postagem.class);
                 startActivity(intent);
-                finish();
+
 
             }
         });
@@ -41,7 +41,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
                 Intent intent = new Intent(MenuPrincipal.this, ListarPostagens.class);
                 startActivity(intent);
-                finish();
+
             }
         });
 

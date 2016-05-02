@@ -15,10 +15,11 @@
         android:layout_height="65dp"
         android:text="Nova Postagem"
         android:id="@+id/btPostagem"
-        android:layout_marginBottom="65dp"
         android:background="#007ea4"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignStart="@+id/btHistorico"
+        android:layout_marginBottom="89dp"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="175dp"
@@ -27,7 +28,9 @@
         android:id="@+id/btHistorico"
         android:background="#007ea4"
         android:layout_above="@+id/btPostagem"
-        android:layout_toStartOf="@+id/btMeuHistorico" />
+        android:layout_toStartOf="@+id/btMeuHistorico"
+        android:clickable="true"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="175dp"
@@ -37,5 +40,18 @@
         android:background="#007ea4"
         android:layout_alignBaseline="@+id/btHistorico"
         android:layout_alignBottom="@+id/btHistorico"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ajuda Unifor"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="96dp"
+        android:textSize="50dp"
+        android:textColor="#007ea4" />
 </RelativeLayout>
