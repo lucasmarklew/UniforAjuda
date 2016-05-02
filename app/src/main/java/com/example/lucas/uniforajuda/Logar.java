@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 public class Logar extends AppCompatActivity {
 
+    //Testando essa chibata de novo pra ver se funcionando
+
     EditText matricula;
     EditText senha;
     Button btLogar;
