@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 /**
  * Tste de COmit Arley Oliveira
- * Teste Commit Mateus
+ * Teste Commit Mateus>>>
  */
 
 public class PostagemBean implements Parcelable {
