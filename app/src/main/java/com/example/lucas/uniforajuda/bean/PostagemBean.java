@@ -6,6 +6,12 @@ import android.os.Parcelable;
 /**
  * Created by Lucas on 30/04/2016.
  */
+
+/**
+ * Tste de COmit Arley Oliveira
+ *
+ */
+
 public class PostagemBean implements Parcelable {
 
     private Long id;
