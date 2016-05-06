@@ -9,5 +9,11 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+    <!-- tema aplicado para sumir barra de status  no action Bar Arley Oliveira. -->
+    <style name="tema_aju" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowFullscreen">true</item>
+
+    </style>
 
 </resources>

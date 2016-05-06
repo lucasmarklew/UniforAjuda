@@ -8,13 +8,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.example.lucas.uniforajuda.bean.PostagemBean;
+import com.example.lucas.uniforajuda.bean.UsuarioBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Lucas on 30/04/2016.
+ * Obs feita por Arley Oliveira: como não teve relacionamento ou criação a mais de uma tabela,foi necesseário
+ * realizar algumas alterações, incluir uma tabela chamada usuario para realizar inserção de usuario no sistema
+ * e  autenticar entrada do Usuario,no caso vai ser necessario ainda criar o relacionamento.
  */
 public class PostagemDAO extends SQLiteOpenHelper {
+    /*adcionado por Arley*/
+    public static final String TABELA_USUARIO = "USUARIO";
+    private static final String TAG_S = "SELECIONAR REGISTROS";
+    private static final String TAG_I_USUARIO = "INSERIR_USUARIO";
+
+    /*adcionado por Arley*/
 
     public static final int VERSAO = 1;
     public static final String TABELA = "postagens";
@@ -38,7 +49,18 @@ public class PostagemDAO extends SQLiteOpenHelper {
                 + "('id' INTEGER PRIMARY KEY NOT NULL , "
                 + "'titulo' TEXT NOT NULL"
                 + ",'postagem' TEXT)";
+
+        String sql2 = "CREATE TABLE " + TABELA_USUARIO
+                + "(id INTEGER PRIMARY KEY, "
+                + "nome TEXT,"
+                + "matricula TEXT,"
+                + "senha TEXT);";
+
+
         db.execSQL(sql);
+        db.execSQL(sql2);
+
+
 
     }
 
@@ -50,7 +72,78 @@ public class PostagemDAO extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+    /**/
+    //Metodo incluidos por Arley para inserir usuario ao banco
+    public void inserirUsuario(UsuarioBean bean){
 
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nome", bean.getNome());
+        contentValues.put("matricula", bean.getMatricula());
+        contentValues.put("senha", bean.getMatricula());
+        getWritableDatabase().insert(TABELA_USUARIO, null, contentValues);
+
+        Log.i(TAG_I_USUARIO, "O registro de id: " + bean.getNome() + " foi inserido com sucesso");
+
+
+    }
+    public ArrayList<UsuarioBean> selectInstances() {
+
+        // Passo 01 - Criar o arraylist de UsuarioBean
+        ArrayList<UsuarioBean> listaUsuarios = new ArrayList<UsuarioBean>();
+
+        // Passo 02 - Criar o SQL para selecionar os registros do banco
+        String sql = "SELECT * FROM " + TABELA_USUARIO;
+
+        // Passo 03 - Recuperar os registros
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+
+        // Passo 04 - Percorrer o cursor e salvar os registros de UsuarioBean
+        while (cursor.moveToNext()) {
+            // Criação da instancia de usuariobean utilizando informações
+            // provenientes da base de dados
+            UsuarioBean usuariobean = new UsuarioBean();
+
+            // Construindo o objeto a partir dos registros da base de dados
+            usuariobean.setId(cursor.getInt(0));
+            usuariobean.setNome(cursor.getString(1));
+            usuariobean.setMatricula(cursor.getString(2));
+            usuariobean.setSenha(cursor.getString(3));
+
+
+            // Adicionando a instancia de usuario a lista de usuarios
+            listaUsuarios.add(usuariobean);
+
+            Log.i(TAG_S, "O registro de id: "+usuariobean.getNome()+" foi selecionado");
+
+        }
+
+        return listaUsuarios;
+    }
+    public void loadDataBase(){
+        UsuarioBean bean = new UsuarioBean();
+        bean.setNome("arley");
+        bean.setMatricula("123");
+        bean.setSenha("123");
+
+        UsuarioBean bean2 = new UsuarioBean();
+        bean2.setNome("lucas");
+        bean2.setMatricula("321");
+        bean2.setSenha("321");
+
+        UsuarioBean bean3 = new UsuarioBean();
+        bean3.setNome("mateus");
+        bean3.setMatricula("012");
+        bean3.setSenha("012");
+
+        inserirUsuario(bean);
+        inserirUsuario(bean2);
+        inserirUsuario(bean3);
+    }
+
+
+
+    /**/
+    //Fim de Metodo implementado por Arley
     public void registrarPostagem(PostagemBean postagem){
 
         ContentValues valores = new ContentValues();
