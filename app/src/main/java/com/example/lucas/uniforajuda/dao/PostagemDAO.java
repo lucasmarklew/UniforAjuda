@@ -24,7 +24,9 @@ public class PostagemDAO extends SQLiteOpenHelper {
     public static final String TABELA_USUARIO = "USUARIO";
     private static final String TAG_S = "SELECIONAR REGISTROS";
     private static final String TAG_I_USUARIO = "INSERIR_USUARIO";
-
+    private static final String TAG_V = "VERIFICANDO_LOGIN";
+    private static final String TAG_LOGIN_OK = "LOGIN AUTORIZADO";
+    private static final String TAG_ERRO_AUTENTICAR = "LOGIN NÃO REALIZADO";
     /*adcionado por Arley*/
 
     public static final int VERSAO = 1;
@@ -139,6 +141,40 @@ public class PostagemDAO extends SQLiteOpenHelper {
         inserirUsuario(bean2);
         inserirUsuario(bean3);
     }
+
+    public UsuarioBean montaUsuario(Cursor cursor) {
+        if (cursor.getCount() == 0) {
+
+            Log.i(TAG_ERRO_AUTENTICAR, "DADOS FORNECIDO INVÁLIDOS");
+
+            return null;
+        }
+        Integer id = cursor.getInt(cursor.getColumnIndex("id"));
+        String nome = cursor.getString(cursor.getColumnIndex("nome"));
+        String matricula = cursor.getString(cursor.getColumnIndex("matricula"));
+        String senha = cursor.getString(cursor.getColumnIndex("senha"));
+
+        UsuarioBean novo = new UsuarioBean();
+        novo.setNome(nome);
+        novo.setId(id);
+        novo.setMatricula(matricula);
+        novo.setSenha(senha);
+        Log.i(TAG_LOGIN_OK, "Usuario : " + nome + " e matricula :" + matricula);
+
+        return novo;
+    }
+
+
+    public  UsuarioBean findByLogin(String matricula, String senha) {
+        String sql = "SELECT * FROM " + TABELA_USUARIO + " WHERE matricula = ? AND senha = ?";
+        String[] selectionArgs = new String[] { matricula, senha };
+        //Cursor cursor = getDatabase().rawQuery(sql, selectionArgs);
+        Log.i(TAG_V, "Buscando ,Matricula : " + matricula + " e senha :"+senha);
+        Cursor cursor = getReadableDatabase().rawQuery(sql, selectionArgs);
+        cursor.moveToFirst();
+        return montaUsuario(cursor);
+    }
+
 
 
 

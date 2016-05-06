@@ -1,5 +1,8 @@
 <resources>
 
     <string name="app_name">Unifor Ajuda</string>
+    <string name="bem_vindo_usuario">Bem Vindo(a)</string>
+    <string name="busca">Buscar Assunto</string>
+    <string name="historico">Histórico</string>
 
 </resources>

@@ -1,7 +1,8 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application theme.<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"> -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
 
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -13,6 +14,10 @@
     <style name="tema_aju" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="android:windowFullscreen">true</item>
+
+    </style>
+
+    <style name="tema_usuario_logado" parent="Theme.AppCompat.Light">
 
     </style>
 

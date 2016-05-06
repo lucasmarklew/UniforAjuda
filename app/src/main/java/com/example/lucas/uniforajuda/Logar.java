@@ -2,9 +2,6 @@ package com.example.lucas.uniforajuda;
 /**
  * Classe modificada para autenticar o login de usuario Arley Oliveira
  * metodos genericos,porém ainda irei deixar mais seguro o caso de autenticar login
- *
- *
- *
  */
 
 import android.content.Intent;
@@ -13,11 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.lucas.uniforajuda.bean.UsuarioBean;
 import com.example.lucas.uniforajuda.dao.PostagemDAO;
 
 import java.util.ArrayList;
+
+import static com.example.lucas.uniforajuda.dao.PostagemDAO.*;
 
 public class Logar extends AppCompatActivity {
 
@@ -26,7 +26,10 @@ public class Logar extends AppCompatActivity {
     Button btLogar;
     String SenhaDigitada;
     String MatriculaDigitada;
-    ArrayList<UsuarioBean>  listaUsuarios;
+    ArrayList<UsuarioBean> listaUsuarios;
+    PostagemDAO dao = new PostagemDAO(this);
+    Boolean liberador = false;
+    UsuarioBean usuarioIntent;
 
 
     @Override
@@ -39,7 +42,7 @@ public class Logar extends AppCompatActivity {
         btLogar = (Button) findViewById(R.id.btLogar);
 
 
-        PostagemDAO dao = new PostagemDAO(this);
+        //PostagemDAO dao = new PostagemDAO(this);
         //listaUsuarios = dao.selectInstances();
         dao.loadDataBase();
         listaUsuarios = dao.selectInstances();
@@ -51,30 +54,23 @@ public class Logar extends AppCompatActivity {
                 SenhaDigitada = senha.getText().toString();
                 MatriculaDigitada = matricula.getText().toString();
 
-                for (int i=0; i<listaUsuarios.size(); i++){
-                    UsuarioBean novo = new UsuarioBean();
+                liberador = validaLogin(MatriculaDigitada, SenhaDigitada);
+                usuarioIntent = capturaUsuarioBD(MatriculaDigitada, SenhaDigitada);
+                if (liberador.equals(true)) {
+                    Intent intent = new Intent(Logar.this, MenuPrincipal.class);
+                    /*intent.putExtra("id",usuarioIntent.getId());
+                    intent.putExtra("nome",usuarioIntent.getNome());
+                    intent.putExtra("matricula",usuarioIntent.getMatricula());
+                    intent.putExtra("senha",usuarioIntent.getSenha()); */
+                    startActivity(intent);
+                    finish();
 
-                    novo = listaUsuarios.get(i);
+                } else {
 
-                    if ( (SenhaDigitada.equals(novo.getSenha())) &&
-                            (MatriculaDigitada.equals(novo.getMatricula())  ) ){
-                        Intent intent = new Intent(Logar.this, MenuPrincipal.class);
-                        startActivity(intent);
-                        finish();
-
-                    }
-                    else {
-
-                        /*Toast.makeText(Logar.this,"Matricula ou Senha invalida " + SenhaDigitada +
-                                " ",Toast.LENGTH_SHORT).show();*/
-
-                    }
-
+                    Toast.makeText(Logar.this, "Matricula ou Senha invalida " +
+                            " ", Toast.LENGTH_SHORT).show();
 
                 }
-
-
-
 
 
             }
@@ -82,6 +78,25 @@ public class Logar extends AppCompatActivity {
         });
 
 
-
     }
+    public UsuarioBean capturaUsuarioBD(String matricula, String senha){
+        UsuarioBean user = dao.findByLogin(matricula, senha);
+        return user;
+    }
+
+
+    public boolean validaLogin(String matricula, String senha) {
+        UsuarioBean user = dao.findByLogin(matricula, senha);
+        if (user == null || user.getMatricula() == null || user.getSenha() == null) {
+            return false;
+        }
+        String informado = matricula + senha;
+        String esperado = user.getMatricula() + user.getSenha();
+        if (informado.equals(esperado)) {
+            return true;
+        }
+        return false;
+    }
+
+
 }
