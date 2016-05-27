@@ -7,7 +7,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.example.lucas.uniforajuda.Postagem;
 import com.example.lucas.uniforajuda.bean.PostagemBean;
+import com.example.lucas.uniforajuda.bean.RespostaBean;
 import com.example.lucas.uniforajuda.bean.UsuarioBean;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.List;
 public class PostagemDAO extends SQLiteOpenHelper {
     /*adcionado por Arley*/
     public static final String TABELA_USUARIO = "USUARIO";
+    public static final String TABELA_RESPOSTA = "RESPOSTA";
     private static final String TAG_S = "SELECIONAR REGISTROS";
     private static final String TAG_I_USUARIO = "INSERIR_USUARIO";
     private static final String TAG_V = "VERIFICANDO_LOGIN";
@@ -47,20 +51,31 @@ public class PostagemDAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String sql = "CREATE TABLE " + TABELA
-                + "('id' INTEGER PRIMARY KEY NOT NULL , "
-                + "'titulo' TEXT NOT NULL"
-                + ",'postagem' TEXT)";
-
         String sql2 = "CREATE TABLE " + TABELA_USUARIO
                 + "(id INTEGER PRIMARY KEY, "
                 + "nome TEXT,"
                 + "matricula TEXT,"
                 + "senha TEXT);";
 
+        String sql = "CREATE TABLE " + TABELA
+                + "( id INTEGER PRIMARY KEY,"
+                + " id_postagem INTEGER,"
+                + " titulo TEXT,"
+                + " postagem  TEXT,"
+                +"  FOREIGN KEY(id_postagem) REFERENCES "+TABELA_USUARIO+"(id))";
 
-        db.execSQL(sql);
+        String sql0 = "CREATE TABLE " + TABELA_RESPOSTA
+                + "( id INTEGER PRIMARY KEY,"
+                + " id_pergunta INTEGER,"
+                + " resposta TEXT,"
+                +"  FOREIGN KEY(id_pergunta) REFERENCES "+TABELA+"(id_postagem))";
+
+
+
+
         db.execSQL(sql2);
+        db.execSQL(sql);
+        db.execSQL(sql0);
 
 
 
@@ -121,6 +136,60 @@ public class PostagemDAO extends SQLiteOpenHelper {
 
         return listaUsuarios;
     }
+
+    public ArrayList<PostagemBean> selectInstancesPostagens() {
+        ArrayList<PostagemBean> listaPostagens = new ArrayList<PostagemBean>();
+        String sql = "SELECT * FROM " + TABELA;
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            PostagemBean postagemBean = new PostagemBean();
+
+            // Construindo o objeto a partir dos registros da base de dados
+            postagemBean.setId(cursor.getInt(0));
+            postagemBean.setTitulo(cursor.getString(2));
+            postagemBean.setPostagem(cursor.getString(3));
+
+
+
+            // Adicionando a instancia de usuario a lista de usuarios
+            listaPostagens.add(postagemBean);
+
+            //Log.i(TAG_S, "O registro de id: "+postagemBean.get()+" foi selecionado");
+
+        }
+
+        return listaPostagens;
+    }
+
+    public ArrayList<RespostaBean> selectInstancesResposas(String id) {
+        ArrayList<RespostaBean> listaRespostas = new ArrayList<RespostaBean>();
+        //String sql = "SELECT * FROM " + TABELA_RESPOSTA;
+       // String sql = "SELECT  id,resposta FROM " + TABELA_RESPOSTA ;
+        //String sql = "SELECT  id_pergunta,resposta FROM " + TABELA_RESPOSTA ;ok
+
+        String sql = "SELECT  id_pergunta,resposta FROM " + TABELA_RESPOSTA + " WHERE id_pergunta  = "+id;
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            Log.i(TAG_S, "Dados encontrados na tabela respostas" +
+                    ": ");
+            RespostaBean resposta = new RespostaBean();
+
+            // Construindo o objeto a partir dos registros da base de dados
+            resposta.setId(cursor.getInt(0));
+            resposta.setResposta(cursor.getString(1));
+            //resposta.setPostagem(cursor.getString(3));
+
+
+
+            // Adicionando a instancia de usuario a lista de usuarios
+            listaRespostas.add(resposta);
+
+            //Log.i(TAG_S, "O registro de id: "+postagemBean.get()+" foi selecionado");
+
+        }
+
+        return listaRespostas;
+    }
     public void loadDataBase(){
         UsuarioBean bean = new UsuarioBean();
         bean.setNome("arley");
@@ -159,17 +228,17 @@ public class PostagemDAO extends SQLiteOpenHelper {
         novo.setId(id);
         novo.setMatricula(matricula);
         novo.setSenha(senha);
-        Log.i(TAG_LOGIN_OK, "Usuario : " + nome + " e matricula :" + matricula);
+        Log.i(TAG_LOGIN_OK, "Usuario : " + nome + " id :" + id + " e matricula :" + matricula);
 
         return novo;
     }
 
 
     public  UsuarioBean findByLogin(String matricula, String senha) {
-        String sql = "SELECT * FROM " + TABELA_USUARIO + " WHERE matricula = ? AND senha = ?";
+        String sql = "SELECT * FROM " + TABELA_USUARIO + " WHERE matricula = ?   and senha = ? ";
         String[] selectionArgs = new String[] { matricula, senha };
         //Cursor cursor = getDatabase().rawQuery(sql, selectionArgs);
-        Log.i(TAG_V, "Buscando ,Matricula : " + matricula + " e senha :"+senha);
+        Log.i(TAG_V, "Buscando ,Matricula : " + matricula + " e senha :" + senha);
         Cursor cursor = getReadableDatabase().rawQuery(sql, selectionArgs);
         cursor.moveToFirst();
         return montaUsuario(cursor);
@@ -178,20 +247,47 @@ public class PostagemDAO extends SQLiteOpenHelper {
 
 
 
-    /**/
-    //Fim de Metodo implementado por Arley
-    public void registrarPostagem(PostagemBean postagem){
+    public void registrarPostagem(PostagemBean postagem,String id_usuario){
 
         ContentValues valores = new ContentValues();
 
         valores.put("titulo", postagem.getTitulo().toString());
         valores.put("postagem", postagem.getPostagem().toString());
+        valores.put("id_postagem",id_usuario);
 
         getWritableDatabase().insert(TABELA, null, valores);
 
-        Log.i(TAG_I, "Registro realizado: " + postagem.getTitulo());
+        Log.i(TAG_I, "Registro realizado,titulo : " + postagem.getTitulo());
+        Log.i(TAG_I, "Registro realizado: " + postagem.getPostagem());
 
     }
+
+
+
+
+
+
+
+
+
+
+    public void registrarResposta(RespostaBean resposta){
+    //public void registrarResposta(RespostaBean resposta,String id_usuario){
+        String id_resposta = Integer.toString(resposta.getId());
+        ContentValues valores = new ContentValues();
+        valores.put("resposta", resposta.getResposta());
+        valores.put("id_pergunta", id_resposta);
+       // valores.put("id_pergunta", id_resposta);
+        //valores.put("resposta", resposta.getResposta());
+         getWritableDatabase().insert(TABELA_RESPOSTA, null, valores);
+
+        Log.i(TAG_I, "Registro realizado,resposta : " + resposta.getResposta());
+        Log.i(TAG_I, "Registro realizado no id da tabela id : " + id_resposta);
+
+    }
+
+
+
 
 
     public void atualizarRegistroPostagem(PostagemBean postagem){
@@ -210,20 +306,20 @@ public class PostagemDAO extends SQLiteOpenHelper {
     }
 
 
-    public List<PostagemBean> recuperarRegistros(){
+    public List<PostagemBean> recuperarRegistros(String id_usuario){
 
         List<PostagemBean> listaPostagens = new ArrayList<PostagemBean>();
-
-        String sql = "Select * from postagens";
+        String sql = "SELECT id,titulo,postagem  FROM " + TABELA + " WHERE id_postagem  = "+id_usuario;
+        //String sql = "SELECT titulo,postagem  FROM " + TABELA + " WHERE id_postagem  = 2";
 
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
-
+        Log.i(TAG_S, "Buscando dados.... : ");
         try{
             while(cursor.moveToNext()){
-
+                Log.i(TAG_S, "Dados encontrados : ");
                 PostagemBean postagem = new PostagemBean();
 
-                postagem.setId(cursor.getLong(0));
+                postagem.setId(cursor.getInt(0));
                 postagem.setTitulo(cursor.getString(1));
                 postagem.setPostagem(cursor.getString(2));
 
@@ -240,13 +336,67 @@ public class PostagemDAO extends SQLiteOpenHelper {
 
 
     public void removerRegistroPostagem(PostagemBean postagem){
-        String [] args = {postagem.getId().toString()};
+        Integer id = postagem.getId();
+        String [] args = {id.toString()};
 
         getWritableDatabase().delete(TABELA, "id=?", args);
 
         Log.i(TAG_R, "Postagem removida: "+ postagem.getTitulo());
     }
 
+    public ArrayList<RespostaBean> recuperaTodosAsRespostas(){
+
+        ArrayList<RespostaBean> listaRespostas = new ArrayList<RespostaBean>();
+        String sql = "SELECT * FROM " + TABELA_RESPOSTA ;
+
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        Log.i(TAG_S, "Buscando dados.... : ");
+        try{
+            while(cursor.moveToNext()){
+                Log.i(TAG_S, "Dados encontrados : ");
+                RespostaBean postagem = new RespostaBean();
+
+                postagem.setId(cursor.getInt(0));
+                postagem.setResposta(cursor.getString(2));
+                //postagem.setPostagem(cursor.getString(1));
+
+                listaRespostas.add(postagem);
+            }
+        }catch(SQLException sqle){
+            Log.e(TAG_L, sqle.getMessage());
+        }finally{
+            cursor.close();
+        }
+
+        return listaRespostas;
+    }
+
+    public List<PostagemBean> recuperaTodosOsRegistros(){
+
+        List<PostagemBean> listaPostagens = new ArrayList<PostagemBean>();
+        String sql = "SELECT * FROM " + TABELA ;
+
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        Log.i(TAG_S, "Buscando dados.... : ");
+        try{
+            while(cursor.moveToNext()){
+                Log.i(TAG_S, "Dados encontrados : ");
+                PostagemBean postagem = new PostagemBean();
+
+                postagem.setId(cursor.getInt(0));
+                postagem.setTitulo(cursor.getString(1));
+                postagem.setPostagem(cursor.getString(2));
+
+                listaPostagens.add(postagem);
+            }
+        }catch(SQLException sqle){
+            Log.e(TAG_L, sqle.getMessage());
+        }finally{
+            cursor.close();
+        }
+
+        return listaPostagens;
+    }
 
 
 }

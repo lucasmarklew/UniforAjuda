@@ -13,7 +13,7 @@ import com.example.lucas.uniforajuda.bean.PostagemBean;
  */
 public class ComentarioHelper {
 
-    private Long IdC;
+    private int IdC;
     private EditText etTituloC;
     private EditText etPostagemC;
     //private TextView textViewPost;
@@ -23,13 +23,13 @@ public class ComentarioHelper {
 
     public ComentarioHelper (ComentarPostagem atividade, PostagemBean extras){
 
-        this.etTituloC = (EditText) atividade.findViewById(R.id.etTituloC);
+        //this.etTituloC = (EditText) atividade.findViewById(R.id.etTituloC);
         this.etPostagemC = (EditText) atividade.findViewById(R.id.etPostagemC);
         //this.textViewPost = (TextView) atividade.findViewById(R.id.textViewPost);
 
-        IdC = extras.getId();
-        etTituloC.setText(extras.getTitulo());
-        etPostagemC.setText(extras.getPostagem());
+       // IdC = extras.getId();
+       // etTituloC.setText(extras.getTitulo());
+        //etPostagemC.setText(extras.getPostagem());
         //textViewPost.setText(extras.getPostagem());
 
         this.postagem = this.getPostagem();

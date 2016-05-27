@@ -9,64 +9,131 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lucas.uniforajuda.MenuPrincipal"
-    android:background="#da111010">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ajuda Unifor"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="96dp"
-        android:textSize="50dp"
-        android:textColor="#007ea4" />
+    android:background="#da111010"
+    android:weightSum="1">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="159dp"
-            android:layout_height="65dp"
-            android:text="Nova Postagem"
-            android:id="@+id/btPostagem"
-            android:layout_gravity="center"
-            android:layout_weight="0.15"
-            android:background="#007ea4"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/btHistorico"
+        android:layout_weight="0.17">
 
-            android:textColor="#ffffff" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Bem Vindo(a)"
+            android:textColor="#ffffff"
 
-        <Button
-            android:layout_width="154dp"
-            android:layout_height="65dp"
-            android:text="@string/historico"
-            android:layout_gravity="left"
-            android:id="@+id/btHistorico"
-            android:background="#007ea4"
-            android:layout_above="@+id/btPostagem"
-            android:layout_toStartOf="@+id/btMeuHistorico"
-            android:clickable="true"
-            android:textColor="#ffffff" />
+            android:layout_weight="0.03"
+            android:textSize="20sp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Logado"
+            android:id="@+id/usuario_logado"
+            android:textColor="#ffffff"
+            android:layout_weight="0.17"
+            android:textSize="20sp"/>
 
 
     </LinearLayout>
 
 
-    <Button
-        android:layout_width="175dp"
-        android:layout_height="65dp"
-        android:text="Pesquisar"
-        android:id="@+id/btMeuHistorico"
-        android:background="#007ea4"
-        android:layout_alignBaseline="@+id/btHistorico"
-        android:layout_alignBottom="@+id/btHistorico"
-        android:layout_alignParentEnd="true"
-        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ajuda Unifor"
+        android:id="@+id/textView2"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:textSize="50dp"
+        android:textColor="#007ea4" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_weight="0.62">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+
+
+        <Button
+            android:layout_width="87dp"
+            android:layout_height="65dp"
+
+            android:text="Nova Postagem"
+            android:id="@+id/btPostagem"
+            android:drawableBottom="@drawable/escrever"
+            android:background="#007ea4"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/btMinhasPostagens"
+
+            android:textColor="#ffffff" />
+
+        <Button
+            android:background="#007ea4"
+            android:layout_marginLeft="10dp"
+            android:topRightRadius="10dp"
+            android:layout_width="78dp"
+            android:layout_height="65dp"
+
+            android:text="@string/meu_historico"
+            android:layout_gravity="left"
+            android:id="@+id/btMinhasPostagens"
+
+            android:drawableBottom="@drawable/postagens"
+            android:layout_above="@+id/btPostagem"
+            android:layout_toStartOf="@+id/btPesquisa"
+            android:clickable="true"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:layout_width="71dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="10dp"
+            android:text="Buscar"
+            android:id="@+id/btPesquisa"
+            android:background="#007ea4"
+            android:drawableBottom="@drawable/procurar"
+            android:layout_alignBaseline="@+id/btMinhasPostagens"
+            android:layout_alignBottom="@+id/btMinhasPostagens"
+            android:layout_alignParentEnd="true"
+            android:textColor="#ffffff"
+            android:layout_gravity="right" />
+
+        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="74dp"
+            android:layout_height="65dp"
+            android:background="#007ea4"
+            android:textColor="#ffffff"
+            android:text="Sair"
+            android:layout_alignBaseline="@+id/btMinhasPostagens"
+            android:layout_alignBottom="@+id/btMinhasPostagens"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/button_logaut"
+            android:drawableBottom="@drawable/botaosair"
+            android:layout_gravity="right" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

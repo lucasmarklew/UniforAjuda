@@ -3,6 +3,18 @@
     <string name="app_name">Unifor Ajuda</string>
     <string name="bem_vindo_usuario">Bem Vindo(a)</string>
     <string name="busca">Buscar Assunto</string>
-    <string name="historico">Histórico</string>
+    <string name="meu_historico">Minhas Postagens</string>
+    <string name="title_activity_pesquisar_postagem">PesquisarPostagem</string>
+    <string name="pesquisar">Pesquisar</string>
+    <string name="botao_retorna_menu">Retornar Menu</string>
+    <string name="texo_adcionar_resposta">Adcionar Resposta</string>
+    <string name="title_activity_visualizar_postagem">Visualizar postagem</string>
+    <string name="retornar_postagem">Retornar</string>
+    <string name="title_activity_visualizar_post_com__respostas">VisualizarPost_com_Respostas
+    </string>
+    <string name="responder_postagem">Adcionar resposta</string>
+    <string name="visualizar_post_com__respostas">Sua postagem</string>
+    <string name="busca_por_assunto">Busca por assunto</string>
+    <string name="suas_postagens">Suas Postagens</string>
 
 </resources>

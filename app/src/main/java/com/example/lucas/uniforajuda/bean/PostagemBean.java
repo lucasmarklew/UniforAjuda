@@ -18,7 +18,9 @@ import android.os.Parcelable;
 
 public class PostagemBean implements Parcelable {
 
-    private Long id;
+
+
+    private int id;
     private String titulo;
     private String postagem;
 
@@ -32,7 +34,7 @@ public class PostagemBean implements Parcelable {
 
     private void readFromParcelable(Parcel in) {
 
-        id = in.readLong();
+        id = in.readInt();
         titulo = in.readString();
         postagem = in.readString();
 
@@ -69,11 +71,11 @@ public class PostagemBean implements Parcelable {
         }
     };
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

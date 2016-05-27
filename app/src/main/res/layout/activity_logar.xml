@@ -26,6 +26,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="45dp"
+        android:inputType="numberPassword"
         android:id="@+id/etMatricula"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"

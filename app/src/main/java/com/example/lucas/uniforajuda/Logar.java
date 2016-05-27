@@ -30,6 +30,7 @@ public class Logar extends AppCompatActivity {
     PostagemDAO dao = new PostagemDAO(this);
     Boolean liberador = false;
     UsuarioBean usuarioIntent;
+    String id_string;
 
 
     @Override
@@ -58,11 +59,12 @@ public class Logar extends AppCompatActivity {
                 usuarioIntent = capturaUsuarioBD(MatriculaDigitada, SenhaDigitada);
                 if (liberador.equals(true)) {
                     Intent intent = new Intent(Logar.this, MenuPrincipal.class);
-                    /*intent.putExtra("id",usuarioIntent.getId());
+                    id_string = Integer.toString(usuarioIntent.getId());
+                    intent.putExtra("id",id_string);
                     intent.putExtra("nome",usuarioIntent.getNome());
                     intent.putExtra("matricula",usuarioIntent.getMatricula());
-                    intent.putExtra("senha",usuarioIntent.getSenha()); */
                     startActivity(intent);
+
                     finish();
 
                 } else {

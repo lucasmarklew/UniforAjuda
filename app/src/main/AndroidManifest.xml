@@ -8,23 +8,36 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreamAtividade"
+        <activity
+            android:name=".SplashScreamAtividade"
             android:theme="@style/tema_aju">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Logar"
-            android:theme="@style/tema_aju"
-            />
+        <activity
+            android:name=".Logar"
+            android:theme="@style/tema_aju" />
         <activity android:name=".MenuPrincipal" />
         <activity android:name=".Postagem" />
-        <activity android:name=".ListarPostagens" />
-        <activity android:name=".ComentarPostagem" />
-
+        <activity android:name=".ListarPostagens"
+            android:label="@string/suas_postagens"   />
+        <activity android:name=".ComentarPostagem"
+            android:label="@string/responder_postagem"   />
+        <activity
+            android:name=".PesquisarPostagem"
+            android:label="@string/busca_por_assunto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VisualizarPostagem"
+            android:label="@string/title_activity_visualizar_postagem"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VisualizarPost_com_Respostas"
+            android:label="@string/visualizar_post_com__respostas"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.lucas.uniforajuda.bean.PostagemBean;
 import com.example.lucas.uniforajuda.dao.PostagemDAO;
@@ -15,7 +16,7 @@ public class Postagem extends AppCompatActivity {
 
     private PostagemHelper postagemHelper;
     private Button btSalvar;
-
+    private Button btRetornaMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,14 @@ public class Postagem extends AppCompatActivity {
 
         postagemHelper = new PostagemHelper(this);
         btSalvar = (Button) findViewById(R.id.btSalvarPostagem);
+        final Bundle bundle = getIntent().getExtras();
+        btRetornaMenu = (Button)findViewById(R.id.botao_retornar);
+        btRetornaMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         btSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,12 +40,11 @@ public class Postagem extends AppCompatActivity {
 
                 PostagemBean postagemBean =  postagemHelper.getPostagem();
                 PostagemDAO postagemDAO = new PostagemDAO(Postagem.this);
-                postagemDAO.registrarPostagem(postagemBean);
-                postagemDAO.close();
+                postagemDAO.registrarPostagem(postagemBean,bundle.getString("id"));
 
-                Intent intent = new Intent(Postagem.this, MenuPrincipal.class);
-                startActivity(intent);
-                finish();
+                postagemDAO.close();
+                onBackPressed();
+
             }
         });
 
